@@ -11,6 +11,7 @@ import Button from '@material-ui/core/Button';
 import Grid from '@material-ui/core/Grid';
 import {Link} from 'react-router-dom';
 import swal from 'sweetalert';
+import axios from 'axios';
 
 
 const imgUrl = process.env.PUBLIC_URL + '/SignIn/footer.png'
@@ -78,16 +79,27 @@ class SingIn extends React.Component {
 
     }
 
-    loginSubmit() {
+    async loginSubmit() {
         const email = document.getElementById("email").value;
-        const password = document.getElementById("password").value
-        console.log(email + " " + password)
-        if (email !== "" && password !== "") {
-            localStorage.setItem("isLoggedin", true);
-            localStorage.setItem("mailLogged", email);
-            localStorage.setItem("passwordLogged", password);
-            swal("Good job!", "You clicked the button!", "success");
-            window.location.href = "/index";
+        const psw = document.getElementById("password").value;
+        console.log(email + " " + psw)
+        if (email !== "" && psw !== "") {
+            axios.post('http://localhost:8080/v1/login', {
+             userName: email,
+             password: psw 
+            }).then(function (response) {
+                swal("Good job!", "You are login!", "success");
+                localStorage.setItem("isLoggedin", true);
+                localStorage.setItem("mailLogged", email);
+                localStorage.setItem("passwordLogged", psw);
+                localStorage.setItem("Bearer",response.data.accessToken)
+                window.location.href = "/index";
+                console.log(response.data);
+            }).catch(function (error) {
+                console.log(email + "  " + psw);
+                swal("ERROR!", "Can not is possible login!", "error");
+                 console.log(error);
+             });
         }
     }
 

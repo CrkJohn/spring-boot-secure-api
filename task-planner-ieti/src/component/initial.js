@@ -15,6 +15,8 @@ import Button from '@material-ui/core/Button';
 import Dialog from '@material-ui/core/Dialog';
 import "react-datepicker/dist/react-datepicker.css";
 import MenuItem from '@material-ui/core/MenuItem';
+import axios from 'axios';
+
 
 
 
@@ -60,7 +62,11 @@ class Index extends React.Component {
             todoList : []
         };
     
-
+        this.axios = axios.create({
+            baseURL: 'http://localhost:8080/v1/',
+            timeout: 1000,
+            headers: {'Authorization': 'Bearer '+ localStorage.getItem("Bearer")}
+        });
 
         this.handleTextChange = this.handleTextChange.bind(this);
         this.handleDateChange = this.handleDateChange.bind(this);
@@ -152,9 +158,12 @@ class Index extends React.Component {
     }
 
     componentDidMount() {
-        fetch('http://localhost:8080/v1/task/allTask')
-            .then(response => response.json())
-            .then(data => {
+        
+        console.log('Bearer '+ localStorage.getItem("Bearer"));
+        this.axios.get('/task')
+            .then(function (response){
+                
+                var data = response.data;
                 let tasksList = [];
                 data.forEach(function (task) {
                     const newItem = {
@@ -168,6 +177,8 @@ class Index extends React.Component {
 
                 });
                 this.setState({todoList:tasksList});
+            }).catch(function (error) {
+                console.log(error);
             });
     }
 
