@@ -1,15 +1,12 @@
 package ieti.trello.backend.trello.controller;
 
 import ieti.trello.backend.trello.entities.*;
-
-import java.util.concurrent.atomic.AtomicLong;
-
-import ieti.trello.backend.trello.services.ITaskService;
 import ieti.trello.backend.trello.services.IUserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
 
 
 @RestController
@@ -20,7 +17,7 @@ public class UserController {
     @Autowired
     IUserService userService;
 
-    @GetMapping("/allUsers")
+    @GetMapping
     public ResponseEntity<?> getUsersList(){
         try {
             return new ResponseEntity<>(userService.getUsersList(),HttpStatus.OK);
@@ -29,7 +26,7 @@ public class UserController {
         }
     }
 
-    @GetMapping("/allUsers/{userId}")
+    @GetMapping("{userId}")
     public ResponseEntity<?> getUserById(@PathVariable  String userId){
         try {
             return new ResponseEntity<>(userService.getUserById(userId),HttpStatus.OK);
@@ -65,5 +62,7 @@ public class UserController {
             return new ResponseEntity<>("ERROR", HttpStatus.NOT_FOUND);
         }
     }
+
+
 
 }

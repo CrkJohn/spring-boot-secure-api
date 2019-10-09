@@ -5,17 +5,18 @@ import ieti.trello.backend.trello.entities.Task;
 import ieti.trello.backend.trello.entities.User;
 import ieti.trello.backend.trello.persistence.ITaskPersistence;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
 
 
-@Component
+@Component("taskPersistence")
 public class TaskPersistence implements ITaskPersistence {
 
     @Autowired
+    @Qualifier("implDataBasesCli")
     private DataBasesCli database;
-
 
     @Override
     public List<Task> geTasksList() {

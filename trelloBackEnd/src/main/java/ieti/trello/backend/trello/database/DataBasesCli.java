@@ -8,7 +8,7 @@ import ieti.trello.backend.trello.entities.*;
 import java.util.*;
 
 
-@Component
+@Component("implDataBasesCli")
 public class DataBasesCli implements IDataBase {
 
     private static List<User> users;
@@ -35,19 +35,29 @@ public class DataBasesCli implements IDataBase {
             User user = new User();
             String name = names[idRamdon] + " "  + lastNames[idRamdon2];
             String email = names[idRamdon] + "."  + lastNames[idRamdon2]+"@mail.escuelaing.edu.co";
-            user.setId(String.valueOf(i+1));
+            user.setUserName(String.valueOf(i+1));
             user.setName(name);
             user.setEmail(email);
             user.setPassword(name);
             users.add(user);
         }
+        User user = new User();
+        user.setUserName("CrkJohn");
+        user.setName("John");
+        user.setEmail("john@mail.escuelaing.edu.co");
+        user.setPassword("123");
+        users.add(user);
 
         for(int i = 0 ; i < 4 ; ++i){
             Task task = new Task();
             task.setId(String.valueOf(i+1));
             task.setDescription(description[i]);
             task.setName(namesTask[i]);
-            task.addMember(new User(names[i],names[i]+"@mail.escuelaing.edu.co",names[i]));
+            user = new User();
+            user.setName(names[i]);
+            user.setEmail(names[i]+"@mail.escuelaing.edu.co");
+            user.setUserName(String.valueOf(i+1));
+            task.getMembers().add(user);
             task.setExpirationDate(new Date());
             tasks.add(task);
         }
@@ -74,7 +84,7 @@ public class DataBasesCli implements IDataBase {
     public List<Task> getTasksByUserId(String userId) {
         List<Task> returnTasks = null;
         for(User user : users){
-            if(user.getId().equals(userId)){
+            if(user.getUserName().equals(userId)){
                 returnTasks =  geTasksList();
                 break;
             }
@@ -88,7 +98,7 @@ public class DataBasesCli implements IDataBase {
         for(Task task : tasks){
             if(task.getId().equals(taskId)){
                 returnTask =  task;
-                task.addMember(user);
+                task.getMembers().add(user);
                 break;
             }
         }
@@ -124,7 +134,7 @@ public class DataBasesCli implements IDataBase {
     public User getUserById(String userId) {
         User returnUser = null;
         for(User user : users){
-            if(user.getId().equals(userId)){
+            if(user.getUserName().equals(userId)){
                 returnUser =  user;
                 break;
             }
@@ -142,7 +152,7 @@ public class DataBasesCli implements IDataBase {
     public User updateUser(User user) {
         int index = -1;
         for(int i = 0 ; i < users.size() ; ++i){
-            if(users.get(i).getId().equals(user.getId())){
+            if(users.get(i).getUserName().equals(user.getUserName())){
                 index = i;
                 break;
             }
@@ -157,7 +167,7 @@ public class DataBasesCli implements IDataBase {
     public void removeUser(String userId) {
         int index = -1;
         for(int i = 0 ; i < users.size() ; ++i){
-            if(users.get(i).getId().equals(userId)){
+            if(users.get(i).getUserName().equals(userId)){
                 index = i;
                 break;
             }

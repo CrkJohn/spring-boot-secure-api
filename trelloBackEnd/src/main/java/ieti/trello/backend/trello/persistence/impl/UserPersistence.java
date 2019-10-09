@@ -4,6 +4,7 @@ import ieti.trello.backend.trello.entities.User;
 import ieti.trello.backend.trello.persistence.IUserPersistence;
 import ieti.trello.backend.trello.database.DataBasesCli;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
@@ -13,6 +14,7 @@ import java.util.List;
 public class UserPersistence implements IUserPersistence{
 
     @Autowired
+    @Qualifier("implDataBasesCli")
     private DataBasesCli database;
 
     @Override

@@ -6,6 +6,7 @@ import java.util.concurrent.atomic.AtomicLong;
 
 import ieti.trello.backend.trello.services.ITaskService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -17,7 +18,8 @@ import org.springframework.web.bind.annotation.*;
 public class TaskController {
 
     @Autowired
-	ITaskService iTaskService;
+    @Qualifier("taskService")
+    ITaskService iTaskService;
 
 	@GetMapping("/allTask")
 	public ResponseEntity<?> geTasksList(){

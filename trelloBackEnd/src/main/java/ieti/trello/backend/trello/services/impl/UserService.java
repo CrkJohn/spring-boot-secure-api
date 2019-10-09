@@ -14,31 +14,31 @@ import java.util.List;
 public class UserService implements IUserService {
 
     @Autowired
-    IUserPersistence iUserService;
+    IUserPersistence userPersistence;
 
 
     @Override
     public List<User> getUsersList() {
-        return iUserService.getUsersList();
+        return userPersistence.getUsersList();
     }
 
     @Override
     public User getUserById(String userId) {
-        return iUserService.getUserById(userId);
+        return userPersistence.getUserById(userId);
     }
 
     @Override
     public User createUser(User user) {
-        return iUserService.createUser(user);
+        return userPersistence.createUser(user);
     }
 
     @Override
     public User updateUser(User user) {
-        return iUserService.updateUser(user);
+        return userPersistence.updateUser(user);
     }
 
     @Override
     public void removeUser(String userId) {
-        iUserService.removeUser(userId);
+        userPersistence.removeUser(userId);
     }
 }

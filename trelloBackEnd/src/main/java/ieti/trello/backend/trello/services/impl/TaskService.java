@@ -5,15 +5,17 @@ import ieti.trello.backend.trello.entities.User;
 import ieti.trello.backend.trello.persistence.ITaskPersistence;
 import ieti.trello.backend.trello.services.ITaskService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
 
 
-@Component
+@Component("taskService")
 public class TaskService implements ITaskService {
 
     @Autowired
+    @Qualifier("taskPersistence")
     ITaskPersistence iTaskPersistence;
 
 
