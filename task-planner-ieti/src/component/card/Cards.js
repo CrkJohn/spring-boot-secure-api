@@ -16,16 +16,9 @@ export class Cards extends React.Component {
     render() {
         const listTodo = this.props.tdList.map((td) =>
             <div key = {uuid.v4()}>
-                <Card>
+                 <Card>
                     <CardActionArea>
-                        <CardContent>
-                            <Typography gutterBottom variant="h5" component="h2">
-                                {td.text}
-                            </Typography>
-                            <Typography variant="body2" color="textSecondary" component="h1">
-                                <Todo text={td.text} email={td.email} dueDate={td.dueDate} />
-                            </Typography>
-                        </CardContent>
+                        <Todo text={td.text} email={td.email} dueDate={td.dueDate} status = {td.status}/>
                     </CardActionArea>
                 </Card>
                 <br></br>

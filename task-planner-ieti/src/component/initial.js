@@ -196,7 +196,7 @@ class Index extends React.Component {
         return (
             <div className={classes.index} id="temp">
                 <Menu></Menu>
-                <Container maxWidth='sm' ce>
+                <Container maxWidth='sm'  justify = "center">
                     <div className={classes.paper} style={{ overflow: 'auto', height: '600px' }}  >
                         <Cards tdList={this.state.todoList} />
                     </div>
