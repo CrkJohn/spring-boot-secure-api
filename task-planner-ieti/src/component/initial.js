@@ -157,15 +157,15 @@ class Index extends React.Component {
        
     }
 
-    componentDidMount() {
-        
-        console.log('Bearer '+ localStorage.getItem("Bearer"));
+    async getTaskList(){
+        var self = this;
         this.axios.get('/task')
             .then(function (response){
-                
+                //console.log(response.data)
                 var data = response.data;
                 let tasksList = [];
                 data.forEach(function (task) {
+                   // console.log(task)
                     const newItem = {
                         text: task.description,
                         name: task.members[0].name,
@@ -174,12 +174,17 @@ class Index extends React.Component {
                         id: Date.now()
                     };
                     tasksList.push(newItem)
-
                 });
-                this.setState({todoList:tasksList});
+
+                self.setState({todoList:tasksList});
+             //   console.log(tasksList);
             }).catch(function (error) {
                 console.log(error);
             });
+    }
+
+    componentDidMount() {
+        this.getTaskList();
     }
 
 
@@ -190,10 +195,8 @@ class Index extends React.Component {
           ]   
         return (
             <div className={classes.index} id="temp">
-
                 <Menu></Menu>
-               
-                <Container maxWidth='sm'>
+                <Container maxWidth='sm' ce>
                     <div className={classes.paper} style={{ overflow: 'auto', height: '600px' }}  >
                         <Cards tdList={this.state.todoList} />
                     </div>

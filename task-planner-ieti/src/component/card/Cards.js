@@ -15,14 +15,14 @@ export class Cards extends React.Component {
 
     render() {
         const listTodo = this.props.tdList.map((td) =>
-            <div id = {uuid.v4()}>
+            <div key = {uuid.v4()}>
                 <Card>
                     <CardActionArea>
                         <CardContent>
                             <Typography gutterBottom variant="h5" component="h2">
                                 {td.text}
                             </Typography>
-                            <Typography variant="body2" color="textSecondary" component="p">
+                            <Typography variant="body2" color="textSecondary" component="h1">
                                 <Todo text={td.text} email={td.email} dueDate={td.dueDate} />
                             </Typography>
                         </CardContent>

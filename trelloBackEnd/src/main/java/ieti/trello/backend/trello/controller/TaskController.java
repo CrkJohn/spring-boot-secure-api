@@ -21,7 +21,7 @@ public class TaskController {
     @Qualifier("taskService")
     ITaskService iTaskService;
 
-	@GetMapping("/allTask")
+	@GetMapping
 	public ResponseEntity<?> geTasksList(){
 		try {
 			return new ResponseEntity<>(iTaskService.geTasksList(),HttpStatus.OK);
