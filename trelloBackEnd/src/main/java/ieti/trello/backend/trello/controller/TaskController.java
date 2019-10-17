@@ -39,7 +39,7 @@ public class TaskController {
         }
     
 	}
-	
+
 	@GetMapping("/user/allTask/{userId}")
     public ResponseEntity<?> getTasksByUserId(@PathVariable String userId){
 		try {
@@ -47,10 +47,23 @@ public class TaskController {
         } catch (Exception ex) {
             return new ResponseEntity<>("ERROR", HttpStatus.NOT_FOUND);
         }
-    
+
 	}
-		
-	@GetMapping("/user/addTask/{taskId}")
+
+    @PostMapping
+    public ResponseEntity<?> saveTasks(@RequestBody Task task){
+        try {
+            System.out.println(task.toString());
+            iTaskService.saveTasks(task);
+            return new ResponseEntity<>(HttpStatus.OK);
+        } catch (Exception ex) {
+            return new ResponseEntity<>("ERROR", HttpStatus.NOT_FOUND);
+        }
+
+    }
+
+
+    @GetMapping("/user/addTask/{taskId}")
     public ResponseEntity<?> assignTaskToUser(String taskId,@RequestBody User user){
 		try {
             return new ResponseEntity<>(iTaskService.assignTaskToUser(taskId, user),HttpStatus.OK);
@@ -78,7 +91,6 @@ public class TaskController {
         } catch (Exception ex) {
             return new ResponseEntity<>("ERROR", HttpStatus.NOT_FOUND);
         }
-    
 	}
 
 

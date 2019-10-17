@@ -47,4 +47,8 @@ public class TaskPersistence implements ITaskPersistence {
     public Task updateTask(Task task) {
         return database.updateTask(task);
     }
+
+    @Override
+    public void saveTask(Task task) { database.saveTask(task);
+    }
 }

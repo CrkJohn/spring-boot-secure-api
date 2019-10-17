@@ -26,17 +26,6 @@ public interface ITaskPersistence {
     public void deleteTaskDashboarTeam(int idUser, int idTeams, int idDashboar, int task);
     public void setNameTeam(String name, int idUser , int idTeams);
     public void setDescriptionTeam(String description, int idUser , int idTeams);
-    
-
-
-        user dashboard
-        public List<User> members;
-        public List<Comment> comments;
-        public State state; 
-        public Labels label;
-        public Date expirationDate;
-        public String name;
-        public String description;
 
     public void addDashboardUser(int idUser, Dashboard dashboard);
     public void addTaskToDasboardUser(int idUser, int idDasboard, Task task);
@@ -64,5 +53,5 @@ public interface ITaskPersistence {
     Task updateTask(Task task);
 
 
-    
+    void saveTask(Task task);
 }

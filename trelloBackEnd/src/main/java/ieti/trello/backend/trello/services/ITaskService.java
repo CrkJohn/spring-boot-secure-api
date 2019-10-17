@@ -17,4 +17,6 @@ public interface ITaskService {
     void removeTask(String taskId);
 
     Task updateTask(Task task);
+
+    void saveTasks(Task task);
 }

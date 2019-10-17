@@ -53,6 +53,7 @@ public class DataBasesCli implements IDataBase {
             task.setId(String.valueOf(i+1));
             task.setDescription(description[i]);
             task.setName(namesTask[i]);
+            task.setState(((i%2 == 0 ) ? State.Ready : State.InProgress));
             user = new User();
             user.setName(names[i]);
             user.setEmail(names[i]+"@mail.escuelaing.edu.co");
@@ -61,6 +62,7 @@ public class DataBasesCli implements IDataBase {
             task.setExpirationDate(new Date());
             tasks.add(task);
         }
+        System.out.println(tasks.toString());
     }
 
     @Override
@@ -175,6 +177,11 @@ public class DataBasesCli implements IDataBase {
         if(index != -1){
             users.remove(index);
         }
+    }
+
+    @Override
+    public void saveTask(Task task) {
+        tasks.add(task);
     }
 
 

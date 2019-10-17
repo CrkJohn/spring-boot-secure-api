@@ -48,4 +48,9 @@ public class TaskService implements ITaskService {
     public Task updateTask(Task task) {
         return iTaskPersistence.updateTask(task);
     }
+
+    @Override
+    public void saveTasks(Task task) {
+        iTaskPersistence.saveTask(task);
+    }
 }
