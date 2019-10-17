@@ -13,6 +13,8 @@ import DataUsageIcon from '@material-ui/icons/DataUsage';
 import './UserTab.css';
 import SearchIcon from '@material-ui/icons/Search';
 import {Link} from 'react-router-dom';
+import axios from 'axios';
+
 
 
 const useStyles  = theme =>  ({
@@ -70,10 +72,7 @@ class Menu extends React.Component {
                 <Button onClick={this.handleOpen} style= {{top:0, left:0}} >
                     <DataUsageIcon className={classes.iconHover}  fontSize="large"  ></DataUsageIcon>
                 </Button>
-                <Button  style={{position:"fixed",top:0, right:0}}>
-                    <SearchIcon className={classes.iconHover}  fontSize="large"  ></SearchIcon>
-                </Button>
-            
+      
                 <Divider id="line"></Divider>
 
                 <Drawer open={this.state.open} onClose={this.handleClose}>
@@ -108,6 +107,13 @@ class Menu extends React.Component {
                                     <InboxIcon />
                                 </ListItemIcon>
                                 <ListItemText primary={'Edit profile'}/>    
+                            </ListItem > 
+
+                            <ListItem button component={Link} to="/filter">
+                                <ListItemIcon>
+                                    <InboxIcon />
+                                </ListItemIcon>
+                                <ListItemText primary={'Filter'}/>    
                             </ListItem > 
                         
                         </List>

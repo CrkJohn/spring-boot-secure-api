@@ -16,6 +16,8 @@ import Dialog from '@material-ui/core/Dialog';
 import "react-datepicker/dist/react-datepicker.css";
 import MenuItem from '@material-ui/core/MenuItem';
 import axios from 'axios';
+import swal from 'sweetalert';
+
 
 
 
@@ -139,53 +141,29 @@ class Index extends React.Component {
             return;
         }
         const newItem = {
-            text: this.state.text,
-            dueDate: this.state.dueDate,
-            status: this.state.status,
+            state  : this.state.status,
+            description: this.state.text,
+            expirationDate: this.state.dueDate,
+            members : [
+                {
+                    email : this.state.email,
+                }
+            ],
             name: this.state.name,
-            email: this.state.email,
             id: Date.now()
         };
-        var tdListJSON = []
-        var tdLists = JSON.parse(localStorage.getItem("tdList"));
-        for(var i = 0 ; i < tdLists.length  ; ++i ){
-            console.log(tdLists[i])
-            tdListJSON.push(tdLists[i]);
-        } 
-        tdListJSON.push(JSON.stringify(newItem));
-        localStorage.setItem("tdList",JSON.stringify(tdListJSON));
-       
+        this.axios.post('/task', 
+            newItem
+        ).then(function (response) {
+            swal("Good job!", "You task was saved!", "success");
+        }).catch(function (error) {
+            console.log(error);
+        });
+        window.location.href = "/index";
+    
     }
 
-    async getTaskList(){
-        var self = this;
-        this.axios.get('/task')
-            .then(function (response){
-                //console.log(response.data)
-                var data = response.data;
-                let tasksList = [];
-                data.forEach(function (task) {
-                   // console.log(task)
-                    const newItem = {
-                        text: task.description,
-                        name: task.members[0].name,
-                        email: task.members[0].email,
-                        dueDate : task.expirationDate,
-                        id: Date.now()
-                    };
-                    tasksList.push(newItem)
-                });
-
-                self.setState({todoList:tasksList});
-             //   console.log(tasksList);
-            }).catch(function (error) {
-                console.log(error);
-            });
-    }
-
-    componentDidMount() {
-        this.getTaskList();
-    }
+    
 
 
     render() {
@@ -196,9 +174,9 @@ class Index extends React.Component {
         return (
             <div className={classes.index} id="temp">
                 <Menu></Menu>
-                <Container maxWidth='sm'  justify = "center">
+                <Container maxWidth='sm'  justify = "center"        >
                     <div className={classes.paper} style={{ overflow: 'auto', height: '600px' }}  >
-                        <Cards tdList={this.state.todoList} />
+                        <Cards/>
                     </div>
                     <Fab aria-label="add" className={classes.fab} onClick={this.handleOpen}>
                         <AddIcon />
@@ -207,27 +185,54 @@ class Index extends React.Component {
                     <Dialog className={classes.dialog} fullWidth={true} onClose={this.handleClose} aria-labelledby="simple-dialog-title" open={this.state.open} >
                         <form onSubmit={this.handleSubmit} style={{ width: "100%" }}>
                             <center>
+                            <Container component="main" maxWidth="xs">
                                 <h3>New task</h3>
                                 <Divider id="line2"></Divider>
 
                                 <TextField
                                     id="new-todo"
-                                    label="Text"
+                                    label="Name's Task"
                                     margin="normal"
                                     type="text"
+                                    fullWidth = {true}
+
                                     onChange={this.handleTextChange}
                                     value={this.state.text}
                                 />
                                 <br />
                                 <br />
 
+                               
+                                <TextField
+                                    id="new-email"
+                                    label="email's reponsible"
+                                    type="text"
+                                    fullWidth = {true}
+
+                                    onChange={this.handleEmailChange}
+                                    value={this.state.email}
+                                />
+                                <br />
+                                <br />
+
+                                <TextField
+                                    id="new-name"
+                                    label="Name's reponsible"
+                                    type="text"
+                                    fullWidth = {true}
+
+                                    onChange={this.handleNameChange}
+                                    value={this.state.name}
+                                />
+                                <br />
+                                <br />
                                 <TextField
                                     id="new-status"
                                     select
                                     label="status"
                                     margin="normal"
                                     helperText="Please select a status"
-
+                                    fullWidth = {true}
                                     onChange={this.handleStatusChange}
                                     value={this.state.status}
                                     
@@ -238,26 +243,6 @@ class Index extends React.Component {
                                     </MenuItem>))}
 
                                 </TextField>
-                                <br />
-                                <br />
-
-                                <TextField
-                                    id="new-email"
-                                    label="email"
-                                    type="text"
-                                    onChange={this.handleEmailChange}
-                                    value={this.state.email}
-                                />
-                                <br />
-                                <br />
-
-                                <TextField
-                                    id="new-name"
-                                    label="name"
-                                    type="text"
-                                    onChange={this.handleNameChange}
-                                    value={this.state.name}
-                                />
                                 <br />
                                 <br />
 
@@ -279,7 +264,7 @@ class Index extends React.Component {
                                     Cancel
                                 </Button>
 
-
+                            </Container>
                             </center>
                             <br />
                         </form>
